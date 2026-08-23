@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-DATASET = "data/sample_revenue_events.csv"
+DATASET = "data/revenue_events.csv"
 
 AUTO_RECOVERY_LIMIT = 50000
 MAX_RETRIES = 3

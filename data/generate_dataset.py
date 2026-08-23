@@ -5,12 +5,12 @@ from pathlib import Path
 
 
 SEED = 42
-SAMPLE_SIZE = 20
+DATASET_SIZE = 1000
 
 AUTO_RECOVERY_LIMIT = 50000
 MAX_RETRIES = 3
 
-OUTPUT_FILE = Path(__file__).parent / "sample_revenue_events.csv"
+OUTPUT_FILE = Path(__file__).parent / "revenue_events.csv"
 
 
 FAILURE_REASONS = [
@@ -213,9 +213,19 @@ def generate_record(index, rng, start_time):
 
     failure_reason = rng.choice(FAILURE_REASONS)
     payment_method = rng.choice(PAYMENT_METHODS)
-    gateway_status = rng.choice(GATEWAY_STATUSES)
+    
+    gateway_status = rng.choices(
+        population=GATEWAY_STATUSES,
+        weights=[90, 8, 2],
+        k=1,
+    )[0]
 
-    retry_count = rng.randint(0, 5)
+    retry_count = rng.choices(
+        population=[0, 1, 2, 3, 4, 5],
+        weights=[45, 25, 15, 8, 5, 2],
+        k=1,
+    )[0]
+    
     previous_failures = rng.randint(0, 5)
     previous_successes = rng.randint(0, 20)
     customer_tenure_days = rng.randint(1, 2000)
@@ -285,7 +295,7 @@ def main():
 
     random_cases = [
         generate_record(i, rng, start_time)
-        for i in range(1, SAMPLE_SIZE - len(policy_cases) + 1)
+        for i in range(1, DATASET_SIZE - len(policy_cases) + 1)
     ]
 
     records = policy_cases + random_cases
