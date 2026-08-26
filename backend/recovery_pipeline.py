@@ -1,6 +1,6 @@
-from recovery_engine import decide_recovery
-from recovery_workflow import execute_recovery
-from audit import record_audit
+from .recovery_engine import decide_recovery
+from .recovery_workflow import execute_recovery
+from .audit import record_audit
 
 
 def process_transaction(transaction):
