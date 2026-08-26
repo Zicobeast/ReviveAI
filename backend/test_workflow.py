@@ -4,6 +4,7 @@ from recovery_workflow import execute_recovery
 transaction = {
     "transaction_id": "TXN-TEST-001",
     "amount": 12000,
+    "failure_reason": "temporary_gateway_failure",
 }
 
 
